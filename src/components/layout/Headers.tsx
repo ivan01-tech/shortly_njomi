@@ -16,14 +16,12 @@ function Headers({}: Props) {
     { title: "Ressources", path: "/your-path" },
   ];
   return (
-    <header>
-      <nav className="bg-white w-full ">
+    <header className="bg-white">
+      <nav className="bg-white w-full max_width">
         <div className="items-center gap-6  max-w-screen-xl mx-auto md:flex ">
           <div className="flex  items-center justify-between py-3 md:py-5 md:block">
             <a href="/">
-              <h1 className="text-3xl font-bold text-primary-dark-violet/90 ">
-                Shortly
-              </h1>
+              <img src="/images/logo.svg" alt="" />
             </a>
             <div className="md:hidden ">
               <HoverCard>
