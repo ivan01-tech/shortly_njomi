@@ -11,10 +11,31 @@
 }
 
 #root .url_form {
-  background: url(/public/images/bg-shorten-mobile.svg) no-repeat center 100%;
+  background-image: url(/images/bg-shorten-mobile.svg);
+  background-size: 60%;
+  background-repeat: no-repeat;
+  background-position-x: 100%;
+  background-color: var(--primary-dark-violet);
+}
+
+#root .boast_section {
+  background-image: url(/images/bg-boost-mobile.svg);
+  background-repeat: no-repeat;
+  background-position: 100%;
+  background-color: var(--primary-dark-violet);
+}
+
+footer .logo_footer svg {
 }
 @media screen and (min-width: 768px) {
   #root .url_form {
-    background: url(/public/images/bg-shorten-desktop.svg) no-repeat center 100%;
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-color: var(--primary-dark-violet);
+    background-image: url(/images/bg-shorten-desktop.svg);
+  }
+
+  #root .boast_section {
+    background-image: url(/images/bg-boost-desktop.svg);
   }
 }

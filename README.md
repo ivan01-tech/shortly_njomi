@@ -10,5 +10,8 @@ This file logs all the changes made to the project.
 
 ## Home page desing
 
-- `ADD`: Add navigation menu to the page
-- `ADD`: Add navigation navbar
+- `ADD`: Add navigation menu to the page.
+
+- `ADD`: Add navigation navbar.
+
+- `ADD`: Footer and other part of the homepage : completed with the homepage.

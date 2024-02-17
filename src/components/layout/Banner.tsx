@@ -5,7 +5,7 @@ type Props = {};
 
 function Banner({}: Props) {
   return (
-    <div className="flex justify-center items-center bg-white">
+    <div className="flex justify-center items-center bg-white pb-[100px]">
       <div className="w-full flex flex-col md:flex-row-reverse  md:h-[32rem] gap-3 mt-8 max_width">
         <div className="h-full flex justify-center items-center">
           <img
