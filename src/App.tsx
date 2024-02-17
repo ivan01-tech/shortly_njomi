@@ -1,10 +1,13 @@
 import "./App.css";
+import Banner from "./components/layout/Banner";
+import Headers from "./components/layout/Headers";
 
 function App() {
   return (
-    <main>
-      <h1>Hello world !</h1>
-    </main>
+    <>
+      <Headers />
+      <Banner />
+    </>
   );
 }
 

@@ -4,7 +4,12 @@
 
 @font-face {
   font-family: "Poppins-Regular";
-  src: url(/public/fonts/Poppins-Regular.ttf);
+  src: url(/fonts/Poppins-Regular.ttf);
+}
+
+@font-face {
+  font-family: "Poppins-Bold";
+  src: url(/fonts/Poppins-Bold.ttf);
 }
 
 @layer base {
@@ -29,8 +34,11 @@
     font-family: "Poppins-Regular";
     font-weight: 500;
   }
-
+  .title_font_bold {
+    font-family: "Poppins-Bold";
+  }
   body {
     width: auto;
+    font-size: 18px;
   }
 }
