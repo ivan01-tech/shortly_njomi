@@ -6,7 +6,7 @@ import { FaInstagram } from "react-icons/fa";
 function Footer() {
   return (
     <footer className="bg-very-dark-violet md:py-10 py-4">
-      <div className=" flex flex-col items-center md:items-start text-white gap-8 md:flex-row max_width md:justify-start">
+      <div className=" flex flex-col items-center md:items-start text-white gap-8 md:flex-row max_width md:justify-start flex-wrap">
         <div className="mb-8 mt-4 logo_footer md:flex-1">
           <a className="" href="/">
             <svg xmlns="http://www.w3.org/2000/svg" width="121" height="33">

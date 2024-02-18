@@ -1,9 +1,12 @@
 import { Menu } from "lucide-react";
+import React from "react";
 import { HoverCard } from "../ui/hover-card";
 import { HoverCardContent, HoverCardTrigger } from "@radix-ui/react-hover-card";
 import { Separator } from "../ui/separator";
 
 function Headers() {
+  const [state] = React.useState(false);
+
   const menus = [
     { title: "Features", path: "/your-path" },
     { title: "Pricing", path: "/your-path" },
@@ -63,7 +66,9 @@ function Headers() {
             </div>
           </div>
           <div
-            className={`flex-1 justify-self-center pb-3 mt-8 md:block md:pb-0 md:mt-0 `}
+            className={`flex-1 justify-self-center pb-3 mt-8 md:block md:pb-0 md:mt-0 ${
+              state ? "block" : "hidden"
+            }`}
           >
             <ul className="justify-center items-center space-y-8 md:flex md:space-x-6 md:space-y-0">
               <div className="flex flex-1 gap-4 items-center">

@@ -13,7 +13,7 @@ function Banner() {
         </div>
 
         <section className="flex justify-center flex-col p-4 px-2 gap-4 md:gap-8 md:text-left items-start">
-          <h1 className="text-5xl text-very-dark-blue font-bold title_font_bold">
+          <h1 className="text-3xl md:text-5xl text-very-dark-blue font-bold title_font_bold ">
             More than just shorter links
           </h1>
           <p className="text-gray">
