@@ -1,16 +1,76 @@
-import "./App.css";
+import LinesEllipsis from "react-lines-ellipsis";
 import Banner from "./components/layout/Banner";
 import Footer from "./components/layout/Footer";
 import Headers from "./components/layout/Headers";
 import UrlShortenForm from "./components/layout/UrlShortenForm";
+import { AlertDestructive } from "./components/ui/AlertComp";
+import { Button } from "./components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+} from "./components/ui/card";
+import "./App.css";
+import { useAsyncFn } from "./hooks/useAsync";
+import useLocalStorage from "./hooks/useLocalStorage";
+import { shrtlnkUrl } from "./services/url.services";
+import { IResponse } from "./types/axios";
+import { Separator } from "@radix-ui/react-separator";
 
 function App() {
+  // state to keep user data from local storage
+  const { value, setStoredValue } = useLocalStorage<IResponse[]>(
+    "myStorage",
+    []
+  );
+  const {
+    executeFn,
+    error,
+    value: dataUrlValue,
+    loading,
+  } = useAsyncFn(shrtlnkUrl);
   return (
     <>
       <Headers />
       <Banner />
-      <div className="max_width relative">
-        <UrlShortenForm />
+      <div className="max_width relative ">
+        <UrlShortenForm
+          setStoredValue={setStoredValue}
+          responObjUrl={{ error, executeFn, value: dataUrlValue, loading }}
+        />
+        <div>{error && <AlertDestructive error={error || ""} />}</div>
+      </div>
+      {/* links */}
+      <div className="max_width">
+        <div className="mt-24 flex flex-col gap-4 w-full">
+          <Card className="flex flex-col    mx-4 md:flex-row items-center md:justify-between  w-max m-auto max-w-full">
+            <CardHeader className=" flex items-center ">
+              <LinesEllipsis
+                text=" https://www.linkedin.com/jobs/view/3668016984/?trackingId=&refId=&midToken=AQGf1j6qfo7kVw&midSig=0Sa3h8BQzQJGQ1&trk=eml-email_jobs_job_application_viewed_01-applied_jobs-0-applied_job&trkEmail=eml-email_jobs_job_application"
+                maxLine="1"
+                className="font-bold flex"
+                ellipsis="..."
+                trimRight
+                basedOn="letters"
+              />
+            </CardHeader>
+            <Separator className="bg-slate-500" />
+            <CardHeader className=" flex items-center ">
+              <LinesEllipsis
+                text=" https://www.linkedin.com/jobs/view/3668016984/?trackingId=&refId=&midToken=AQGf1j6qfo7kVw&midSig=0Sa3h8BQzQJGQ1&trk=eml-email_jobs_job_application_viewed_01-applied_jobs-0-applied_job&trkEmail=eml-email_jobs_job_application"
+                maxLine="1"
+                className="font-bold flex"
+                ellipsis="..."
+                trimRight
+                basedOn="letters"
+              />
+            </CardHeader>
+            <CardFooter>
+              <Button className="w-full md:w-auto">Copy </Button>
+            </CardFooter>
+          </Card>
+        </div>
       </div>
       <div className="max_width ">
         <div className="mt-[120px]">
@@ -31,7 +91,7 @@ function App() {
               left-[50%] translate-x-[-50%]
               rounded-full   bg-primary-dark-violet flex justify-center items-center md:left-16"
               >
-                <img src="/public/images/icon-detailed-records.svg" alt="" />
+                <img src="/images/icon-detailed-records.svg" alt="" />
               </div>
               <section className="pt-10">
                 <h3 className="text-xl my-3 font-bold">Detailed Records</h3>
@@ -49,7 +109,7 @@ function App() {
               left-[50%] translate-x-[-50%]
               rounded-full   bg-primary-dark-violet flex justify-center items-center md:left-16"
               >
-                <img src="/public/images/icon-detailed-records.svg" alt="" />
+                <img src="/images/icon-detailed-records.svg" alt="" />
               </div>
               <section className="pt-10">
                 <h3 className="text-xl my-3 font-bold">Detailed Records</h3>
@@ -67,7 +127,7 @@ function App() {
               left-[50%] translate-x-[-50%]
               rounded-full   bg-primary-dark-violet flex justify-center items-center md:left-16"
               >
-                <img src="/public/images/icon-detailed-records.svg" alt="" />
+                <img src="/images/icon-detailed-records.svg" alt="" />
               </div>
               <section className="pt-10">
                 <h3 className="text-xl my-3 font-bold">Detailed Records</h3>
@@ -100,6 +160,7 @@ function App() {
           </div>
         </div>
       </div>
+
       <Footer />
     </>
   );

@@ -1,33 +1,33 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 
 // type of the state
-interface AsyncHookState<T> {
+export interface AsyncHookState<T> {
   error: string | null;
   loading: boolean;
   value: T | null;
 }
 
-interface AsyncHook<T> extends AsyncHookState<T> {
+export interface AsyncHook<T> extends AsyncHookState<T> {
   executeFn: (...params: unknown[]) => Promise<T>;
 }
 
-export const useAsync = function <U, V>(func: (params: U) => Promise<V>) {
-  const { executeFn, ...state } = useAsyncInternal(func, true, []);
+// export const useAsync = function <U, V>(func: (params: U) => Promise<V>) {
+//   const { executeFn, ...state } = useAsyncInternal(func, true, []);
 
-  useEffect(
-    function () {
-      executeFn();
-    },
-    [executeFn]
-  );
+//   useEffect(
+//     function () {
+//       executeFn();
+//     },
+//     [executeFn]
+//   );
 
-  return state as {
-    error: string | null;
-    loading: boolean;
-    value: V;
-    executeFn: (params: U) => void;
-  };
-};
+//   return state as {
+//     error: string | null;
+//     loading: boolean;
+//     value: V;
+//     executeFn: (params: U) => void;
+//   };
+// };
 
 export const useAsyncFn = function <U, V>(
   func: (params: U) => Promise<V>,
@@ -37,7 +37,7 @@ export const useAsyncFn = function <U, V>(
     error: string | null;
     loading: boolean;
     value: V;
-    executeFn: (params: U) => Promise<void>;
+    executeFn: (params: U) => Promise<V>;
   };
 };
 

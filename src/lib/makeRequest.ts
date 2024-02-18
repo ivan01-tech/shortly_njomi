@@ -1,4 +1,5 @@
 import instance from "@/config/Axios";
+import { IError } from "@/types/axios";
 import { AxiosError, AxiosRequestConfig, AxiosResponse } from "axios";
 
 /**
@@ -21,7 +22,7 @@ async function makeRequest<T>(
     })
     .catch((err: AxiosError) => {
       console.log("erreur : ", err);
-      return Promise.reject(err.message);
+      return Promise.reject({ message: err.message });
     });
 }
 

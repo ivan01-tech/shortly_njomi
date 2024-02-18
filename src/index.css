@@ -97,6 +97,6 @@
   body {
     width: auto;
     background-color: var(--body-gray);
-    font-size: 18px;
+    /* font-size: 18px; */
   }
 }

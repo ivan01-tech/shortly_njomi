@@ -3,14 +3,30 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { UrlModel, UrlType } from "@/lib/userModel";
+import { Url, UrlModel, UrlType } from "@/lib/userModel";
 import { Input } from "../ui/input";
-import { useAsyncFn } from "@/hooks/useAsync";
-import { shrtlnkUrl } from "@/services/url.services";
-import useLocalStorage from "@/hooks/useLocalStorage";
+import { ButtonLoading } from "../ui/LoadingBtn";
+import { IResponse, ShrtlnkResponse } from "@/types/axios";
 
-export default function UrlShortenForm() {
+type UrlProps = {
+  setStoredValue: (
+    newValue: IResponse[] | ((value: IResponse[]) => IResponse[])
+  ) => void;
+
+  responObjUrl: {
+    error: string | null;
+    loading: boolean;
+    value: ShrtlnkResponse;
+    executeFn: (params: Url) => Promise<ShrtlnkResponse>;
+  };
+};
+
+export default function UrlShortenForm({
+  responObjUrl,
+  setStoredValue,
+}: UrlProps) {
   // zod and RFC
+  const { error, loading, executeFn, value } = responObjUrl;
   const {
     register,
     handleSubmit,
@@ -20,24 +36,17 @@ export default function UrlShortenForm() {
     resolver: zodResolver(UrlModel),
   });
 
-  // state to keep user data from local storage
-  const { value, removeStoredValue, setStoredValue } = useLocalStorage(
-    "myStorage",
-    []
-  );
-  const {
-    executeFn,
-    error,
-    value: dataUrlValue,
-    loading,
-  } = useAsyncFn(shrtlnkUrl);
-
   const handlerSubmitHelper = async (data: UrlType) => {
     console.log("first form submission : ", data);
     try {
-      await executeFn(data);
+      const dataUrlValue = await executeFn(data);
 
-      // save it to the loacalstorage
+      if ("message" in dataUrlValue) {
+        console.error("Error:", dataUrlValue.message);
+      } else {
+        console.log("Short Link:", dataUrlValue, value);
+        setStoredValue((prev) => [...prev, dataUrlValue]);
+      }
     } catch (error) {
       console.log("error: ", error);
     }
@@ -49,15 +58,16 @@ export default function UrlShortenForm() {
   };
 
   return (
-    <div className="absolute url_form rounded-md -top-[50px] inset-0 h-max  w-full    p-0 m-O">
-      <Card className="  flex justify-center items-center m-auto bg-transparent h-full">
-        <form
-          className="w-full p-4 h-full justify-center items-center flex !pt-10"
-          onSubmit={handleSubmit(onSubmit)}
-        >
-          <div className="flex h-full flex-1 items-center">
+    <>
+      <div className="absolute url_form rounded-md -top-[50px] inset-0     p-0  mx-4 md:m-0 h-[160px]">
+        <Card className="  flex justify-center items-center m-auto bg-transparent h-full ">
+          <form
+            className="w-full  !py-4 !px-2 h-full justify-center items-center flex flex-col flex-1  gap-2 md:flex-row "
+            onSubmit={handleSubmit(onSubmit)}
+          >
+            {/* <div className="flex-col h-full flex-1 items-center gap-2 md:flex-row mx-4"> */}
             <CardContent className=" flex-1">
-              <div className="grid gap-2">
+              <div className="flex flex-col gap-1">
                 <Input
                   {...register("url", { required: true })}
                   id="url"
@@ -74,17 +84,22 @@ export default function UrlShortenForm() {
                 )}
               </div>
             </CardContent>
-            <CardFooter className="flex flex-col">
-              <Button
-                type="submit"
-                className="w-full font-bold bg-primary-cyan"
-              >
-                Shorten it !
-              </Button>
+            <CardFooter className="flex flex-col w-full md:w-auto max-w-[250px] m-auto">
+              {!loading ? (
+                <Button
+                  type="submit"
+                  className="w-full font-bold bg-primary-cyan"
+                >
+                  Shortten it !
+                </Button>
+              ) : (
+                <ButtonLoading />
+              )}
             </CardFooter>
-          </div>
-        </form>
-      </Card>
-    </div>
+            {/* </div> */}
+          </form>
+        </Card>
+      </div>
+    </>
   );
 }
