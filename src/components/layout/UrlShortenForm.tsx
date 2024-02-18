@@ -5,19 +5,42 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { UrlModel, UrlType } from "@/lib/userModel";
 import { Input } from "../ui/input";
+import { useAsyncFn } from "@/hooks/useAsync";
+import { shrtlnkUrl } from "@/services/url.services";
+import useLocalStorage from "@/hooks/useLocalStorage";
 
 export default function UrlShortenForm() {
+  // zod and RFC
   const {
     register,
     handleSubmit,
-    trigger,
+    // trigger,
     formState: { errors },
   } = useForm<UrlType>({
     resolver: zodResolver(UrlModel),
   });
 
-  const handlerSubmitHelper = (Url: UrlType) => {
-    console.log("first form submission : ", Url);
+  // state to keep user data from local storage
+  const { value, removeStoredValue, setStoredValue } = useLocalStorage(
+    "myStorage",
+    []
+  );
+  const {
+    executeFn,
+    error,
+    value: dataUrlValue,
+    loading,
+  } = useAsyncFn(shrtlnkUrl);
+
+  const handlerSubmitHelper = async (data: UrlType) => {
+    console.log("first form submission : ", data);
+    try {
+      await executeFn(data);
+
+      // save it to the loacalstorage
+    } catch (error) {
+      console.log("error: ", error);
+    }
   };
 
   const onSubmit: SubmitHandler<UrlType> = (url) => {

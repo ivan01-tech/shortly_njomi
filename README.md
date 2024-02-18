@@ -15,3 +15,7 @@ This file logs all the changes made to the project.
 - `ADD`: Add navigation navbar.
 
 - `ADD`: Footer and other part of the homepage : completed with the homepage.
+
+## Code Logic
+
+- `Add`: configuring state for the , hooks loacl storage services to make request and so on`

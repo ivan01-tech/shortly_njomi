@@ -87,7 +87,7 @@ function App() {
       flex justify-center items-center flex-col !gap-4 !py-20"
         >
           <h2 className="text-3xl font-bold text-white">
-            Booast your link today
+            Boost your link today
           </h2>
 
           <div className="text-gray-600 w-full  font-bold md:flex justify-center  md:justify-start">
