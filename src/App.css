@@ -25,6 +25,13 @@
   background-color: var(--primary-dark-violet);
 }
 
+.truncated-text {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  /* max-width: 100%; */
+}
+
 footer .logo_footer svg {
 }
 @media screen and (min-width: 768px) {

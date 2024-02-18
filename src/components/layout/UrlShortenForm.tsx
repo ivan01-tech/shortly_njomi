@@ -61,43 +61,44 @@ export default function UrlShortenForm({
     <>
       <div className="absolute url_form rounded-md -top-[50px] inset-0     p-0  mx-4 md:m-0 h-[160px]">
         <Card className="  flex justify-center items-center m-auto bg-transparent h-full ">
-          <form
-            className="w-full  !py-4 !px-2 h-full justify-center items-center flex flex-col flex-1  gap-2 md:flex-row "
-            onSubmit={handleSubmit(onSubmit)}
-          >
-            {/* <div className="flex-col h-full flex-1 items-center gap-2 md:flex-row mx-4"> */}
-            <CardContent className=" flex-1">
-              <div className="flex flex-col gap-1">
-                <Input
-                  {...register("url", { required: true })}
-                  id="url"
-                  type="url"
-                  className={`${
-                    errors.url
-                      ? "border-secondary-red border-[3px] text-[.7rem]"
-                      : ""
-                  }`}
-                  placeholder="Shorten a link here.."
-                />
-                {errors.url && (
-                  <p className="text-secondary-red">{errors.url.message}</p>
+          <div className="flex items-center justify-center flex-col w-full">
+            <form
+              className="w-full  !py-4 !px-2 h-full justify-center items-center flex flex-col flex-1  gap-2 md:flex-row "
+              onSubmit={handleSubmit(onSubmit)}
+            >
+              <CardContent className=" flex-1">
+                <div className="flex flex-col gap-1">
+                  <Input
+                    {...register("url", { required: true })}
+                    id="url"
+                    type="url"
+                    className={`${
+                      errors.url
+                        ? "border-secondary-red border-[3px] text-[.7rem]"
+                        : ""
+                    }`}
+                    placeholder="Shorten a link here.."
+                  />
+                </div>
+              </CardContent>
+              <CardFooter className="flex flex-col w-full md:w-auto max-w-[250px] m-auto">
+                {!loading ? (
+                  <Button
+                    type="submit"
+                    className="w-full font-bold bg-primary-cyan"
+                  >
+                    Shortten it !
+                  </Button>
+                ) : (
+                  <ButtonLoading />
                 )}
-              </div>
-            </CardContent>
-            <CardFooter className="flex flex-col w-full md:w-auto max-w-[250px] m-auto">
-              {!loading ? (
-                <Button
-                  type="submit"
-                  className="w-full font-bold bg-primary-cyan"
-                >
-                  Shortten it !
-                </Button>
-              ) : (
-                <ButtonLoading />
-              )}
-            </CardFooter>
-            {/* </div> */}
-          </form>
+              </CardFooter>
+              {/* </div> */}
+            </form>
+            {errors.url && (
+              <p className="text-secondary-red">{errors.url.message}</p>
+            )}
+          </div>
         </Card>
       </div>
     </>

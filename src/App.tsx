@@ -1,23 +1,17 @@
-import LinesEllipsis from "react-lines-ellipsis";
 import Banner from "./components/layout/Banner";
 import Footer from "./components/layout/Footer";
 import Headers from "./components/layout/Headers";
 import UrlShortenForm from "./components/layout/UrlShortenForm";
 import { AlertDestructive } from "./components/ui/AlertComp";
 import { Button } from "./components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-} from "./components/ui/card";
+
 import "./App.css";
 import { useAsyncFn } from "./hooks/useAsync";
 import useLocalStorage from "./hooks/useLocalStorage";
 import { shrtlnkUrl } from "./services/url.services";
 import { IResponse } from "./types/axios";
-import { Separator } from "@radix-ui/react-separator";
-
+import copy from "clipboard-copy";
+import useToggle from "./hooks/useToggle";
 function App() {
   // state to keep user data from local storage
   const { value, setStoredValue } = useLocalStorage<IResponse[]>(
@@ -30,6 +24,17 @@ function App() {
     value: dataUrlValue,
     loading,
   } = useAsyncFn(shrtlnkUrl);
+  const [CopyValue, toggle] = useToggle(false);
+
+  const handleCopyClick = async (text: string) => {
+    try {
+      await copy(text);
+      toggle(true);
+    } catch (err) {
+      console.error("Erreur lors de la copie dans le presse-papiers :", err);
+      toggle(false);
+    }
+  };
   return (
     <>
       <Headers />
@@ -43,34 +48,34 @@ function App() {
       </div>
       {/* links */}
       <div className="max_width">
-        <div className="mt-24 flex flex-col gap-4 w-full">
-          <Card className="flex flex-col    mx-4 md:flex-row items-center md:justify-between  w-max m-auto max-w-full">
-            <CardHeader className=" flex items-center ">
-              <LinesEllipsis
-                text=" https://www.linkedin.com/jobs/view/3668016984/?trackingId=&refId=&midToken=AQGf1j6qfo7kVw&midSig=0Sa3h8BQzQJGQ1&trk=eml-email_jobs_job_application_viewed_01-applied_jobs-0-applied_job&trkEmail=eml-email_jobs_job_application"
-                maxLine="1"
-                className="font-bold flex"
-                ellipsis="..."
-                trimRight
-                basedOn="letters"
-              />
-            </CardHeader>
-            <Separator className="bg-slate-500" />
-            <CardHeader className=" flex items-center ">
-              <LinesEllipsis
-                text=" https://www.linkedin.com/jobs/view/3668016984/?trackingId=&refId=&midToken=AQGf1j6qfo7kVw&midSig=0Sa3h8BQzQJGQ1&trk=eml-email_jobs_job_application_viewed_01-applied_jobs-0-applied_job&trkEmail=eml-email_jobs_job_application"
-                maxLine="1"
-                className="font-bold flex"
-                ellipsis="..."
-                trimRight
-                basedOn="letters"
-              />
-            </CardHeader>
-            <CardFooter>
-              <Button className="w-full md:w-auto">Copy </Button>
-            </CardFooter>
-          </Card>
-        </div>
+        {value && value.length >= 1 && (
+          <div className="mt-18 flex flex-col gap-4 w-full">
+            {value.map(function (item) {
+              return (
+                <div
+                  key={item.key}
+                  className="rounded-lg  bg-card text-card-foreground shadow-sm   flex flex-col mx-4 md:mx-0 md:flex-row items-center !md:justify-between gap-4 "
+                >
+                  <div className="truncated-text px-4 py-2 border-gray border-b-[.1rem]  w-full pt-4 font-bold md:border-none">
+                    {item.url}
+                  </div>
+
+                  <div className="truncated-text px-4 py-2 text-primary-cyan    w-full pt-4 font-bold">
+                    {item.shrtlnk}
+                  </div>
+                  <div className="p-2 w-full md:w-auto">
+                    <Button
+                      onClick={() => handleCopyClick(item.shrtlnk)}
+                      className="w-full bg-primary-cyan md:w-auto"
+                    >
+                      {CopyValue ? "Copy !" : "Copied !"}
+                    </Button>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        )}
       </div>
       <div className="max_width ">
         <div className="mt-[120px]">
@@ -91,14 +96,14 @@ function App() {
               left-[50%] translate-x-[-50%]
               rounded-full   bg-primary-dark-violet flex justify-center items-center md:left-16"
               >
-                <img src="/images/icon-detailed-records.svg" alt="" />
+                <img src="/images/icon-brand-recognition.svg" alt="" />
               </div>
               <section className="pt-10">
-                <h3 className="text-xl my-3 font-bold">Detailed Records</h3>
+                <h3 className="text-xl my-3 font-bold">Brands Recognition</h3>
                 <p className="text-gray">
-                  Gain insights into who is clicking your links, Knowing when
-                  and where people engage with your content helps inform better
-                  decision
+                  Boost yourn brand recognition with each click. Genreic links
+                  don't mean a thing. Branded links help instil confidence in
+                  your content.
                 </p>
               </section>
             </div>
@@ -127,14 +132,13 @@ function App() {
               left-[50%] translate-x-[-50%]
               rounded-full   bg-primary-dark-violet flex justify-center items-center md:left-16"
               >
-                <img src="/images/icon-detailed-records.svg" alt="" />
+                <img src="/images/icon-fully-customizable.svg" alt="" />
               </div>
               <section className="pt-10">
-                <h3 className="text-xl my-3 font-bold">Detailed Records</h3>
+                <h3 className="text-xl my-3 font-bold">Fully customizable</h3>
                 <p className="text-gray">
-                  Gain insights into who is clicking your links, Knowing when
-                  and where people engage with your content helps inform better
-                  decision
+                  Improve brand awareness and content discoverability through
+                  the customizable links. supercharging audience engagement.
                 </p>
               </section>
             </div>

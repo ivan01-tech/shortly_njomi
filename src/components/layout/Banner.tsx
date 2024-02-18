@@ -6,10 +6,10 @@ type Props = {};
 function Banner({}: Props) {
   return (
     <div className="flex justify-center items-center bg-white pb-[100px]">
-      <div className="w-full flex flex-col md:flex-row-reverse  md:h-[32rem] gap-3 mt-8 max_width">
+      <div className="w-full flex flex-col md:flex-row-reverse  md:h-[32rem] gap-6 mt-8 max_width">
         <div className="h-full flex justify-center items-center">
           <img
-            className="h-auto object-contain w-full m-w-[500px]"
+            className="h-auto w-[80%] object-contain md:w-full"
             src="/images/illustration-working.svg"
             alt=""
           />
@@ -24,9 +24,9 @@ function Banner({}: Props) {
             links are performing.
           </p>
 
-          <div className="text-gray-600 w-full  font-bold md:flex justify-center  md:justify-start">
+          <div className="text-gray-600 w-full  font-bold flex justify-center  md:justify-start">
             <a
-              className="hover:opacity-70 block font-bold text-white   text-center bg-primary-cyan  rounded-full py-2 px-6 max-w-[250px] m-auto "
+              className="hover:opacity-70  font-bold text-white   text-center bg-primary-cyan  rounded-full py-2 px-6 max-w-[250px] m-auto md:m-0"
               href={"/"}
             >
               Get Started
