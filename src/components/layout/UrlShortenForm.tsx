@@ -66,26 +66,24 @@ export default function UrlShortenForm({
               className="w-full  !py-4 !px-2 h-full justify-center items-center flex flex-col flex-1  gap-2 md:flex-row "
               onSubmit={handleSubmit(onSubmit)}
             >
-              <CardContent className=" flex-1">
-                <div className="flex flex-col gap-1">
-                  <Input
-                    {...register("url", { required: true })}
-                    id="url"
-                    type="url"
-                    className={`${
-                      errors.url
-                        ? "border-secondary-red border-[3px] text-[.7rem]"
-                        : ""
-                    }`}
-                    placeholder="Shorten a link here.."
-                  />
-                </div>
+              <CardContent className="w-full">
+                <Input
+                  {...register("url", { required: true })}
+                  id="url"
+                  type="url"
+                  className={` flex-1 w-full  ${
+                    errors.url
+                      ? "border-secondary-red border-[3px] text-[.7rem]"
+                      : ""
+                  }`}
+                  placeholder="Shorten a link here.."
+                />
               </CardContent>
-              <CardFooter className="flex flex-col w-full md:w-auto max-w-[250px] m-auto">
+              <CardFooter className="flex flex-col w-full md:w-auto  m-auto">
                 {!loading ? (
                   <Button
                     type="submit"
-                    className="w-full font-bold bg-primary-cyan"
+                    className="!w-full font-bold bg-primary-cyan"
                   >
                     Shortten it !
                   </Button>
