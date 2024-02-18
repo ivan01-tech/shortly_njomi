@@ -3,9 +3,7 @@ import { FaFacebook } from "react-icons/fa";
 import { FaPinterest } from "react-icons/fa";
 import { FaInstagram } from "react-icons/fa";
 
-type Props = {};
-
-function Footer({}: Props) {
+function Footer() {
   return (
     <footer className="bg-very-dark-violet md:py-10 py-4">
       <div className=" flex flex-col items-center md:items-start text-white gap-8 md:flex-row max_width md:justify-start">

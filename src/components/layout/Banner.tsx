@@ -1,9 +1,6 @@
 /* eslint-disable no-empty-pattern */
-import React from "react";
 
-type Props = {};
-
-function Banner({}: Props) {
+function Banner() {
   return (
     <div className="flex justify-center items-center bg-white pb-[100px]">
       <div className="w-full flex flex-col md:flex-row-reverse  md:h-[32rem] gap-6 mt-8 max_width">
