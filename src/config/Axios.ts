@@ -10,9 +10,17 @@ const instance = axios.create({
     "Content-Type": "application/json",
     Accept: "application/json",
     crossDomain: true,
-    "x-api-key": apiKey,
+    "api-key": apiKey,
 
     withCredentials: true,
+    transformRequest: [
+      function (data: any, headers: any) {
+        // Force la capitalisation de l'en-tête "api-key"
+        headers["api-key"] = apiKey;
+
+        return JSON.stringify(data);
+      },
+    ],
   },
 });
 

@@ -26,7 +26,7 @@ export default function UrlShortenForm({
   setStoredValue,
 }: UrlProps) {
   // zod and RFC
-  const { error, loading, executeFn, value } = responObjUrl;
+  const { loading, executeFn, value } = responObjUrl;
   const {
     register,
     handleSubmit,

@@ -8,5 +8,13 @@ export async function shrtlnkUrl(data: Url) {
   return await makeRequest<ShrtlnkResponse>(GLOBAL_URL.short_url, {
     data,
     method: "POST",
-  });
+  })
+    .then((res) => {
+      if ("message" in res) {
+        return Promise.reject({ message: res.message });
+      }
+
+      return res;
+    })
+    .catch((err) => err);
 }
