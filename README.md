@@ -19,4 +19,7 @@ This file logs all the changes made to the project.
 ## Code Logic
 
 - `Add`: configuring state for the , hooks loacl storage services to make request and so on`
+
 - `Stack` : try to solve CORS problems.
+
+- `Stack` : Deploy in order to have more info about the Netxork error problem.
