@@ -3,7 +3,7 @@ import App from "../App";
 import { cleanup, render, screen } from "@testing-library/react";
 import { expect } from "vitest";
 
-describe("Renders the", () => {
+describe("Banner", () => {
   /**
    * Resets all renders after each test
    */
@@ -41,14 +41,11 @@ describe("Renders the", () => {
     // Setup
     await render(<App />);
 
-    // Assert
-    const button = (await screen.queryByRole("button", {
-      name: "Shortten it !",
+    const getStartedBtn = (await screen.queryByRole("button", {
+      name: "Get Started",
     })) as HTMLButtonElement;
-    const input = screen.queryByLabelText("") as HTMLInputElement;
 
     // Pre Expectations
-    expect(button).toBeInTheDocument();
-    expect(input).toBeInTheDocument();
+    expect(getStartedBtn).toBeInTheDocument();
   });
 });

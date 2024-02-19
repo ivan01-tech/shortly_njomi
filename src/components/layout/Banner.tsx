@@ -1,5 +1,7 @@
 /* eslint-disable no-empty-pattern */
 
+import { Button } from "../ui/button";
+
 function Banner() {
   return (
     <div className="flex justify-center items-center bg-white pb-[100px]">
@@ -22,12 +24,12 @@ function Banner() {
           </p>
 
           <div className="text-gray-600 w-full  font-bold flex justify-center  md:justify-start">
-            <a
+            <Button
               className="hover:opacity-70  font-bold text-white   text-center bg-primary-cyan  rounded-full py-2 px-6 max-w-[250px] m-auto md:m-0"
-              href={"/"}
+              // href={"/"}
             >
               Get Started
-            </a>
+            </Button>
           </div>
         </section>
       </div>

@@ -8,9 +8,9 @@ function Headers() {
   const [state] = React.useState(false);
 
   const menus = [
-    { title: "Features", path: "/your-path" },
-    { title: "Pricing", path: "/your-path" },
-    { title: "Ressources", path: "/your-path" },
+    { title: "Features", path: "/" },
+    { title: "Pricing", path: "/" },
+    { title: "Ressources", path: "/" },
   ];
   return (
     <header className="bg-white">
