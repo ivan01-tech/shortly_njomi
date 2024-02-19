@@ -6,9 +6,12 @@ const apiKey = import.meta.env.VITE_SHORTLINK_API_KEY;
 console.log("first instance : ", apiKey, apiUrl);
 const instance = axios.create({
   baseURL: apiUrl,
+  timeout: 10000,
   headers: {
     "Content-Type": "application/json",
     Accept: "application/json",
+    // "Access-Control-Allow-Origin": "*",
+    // "Access-Control-Allow-Headers": "",
     crossDomain: true,
     "api-key": apiKey,
     withCredentials: true,

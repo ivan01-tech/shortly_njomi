@@ -23,4 +23,7 @@ This file logs all the changes made to the project.
 - `Stack` : try to solve CORS problems.
 
 - `Stack` : Deploy in order to have more info about the Netxork error problem.
+
 - `Feat` : configuring test with vitest.
+
+- `Feat` : Finally solved netwok error.

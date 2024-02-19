@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
 
 const useToggle = (
@@ -5,8 +6,10 @@ const useToggle = (
 ): [boolean, (value: unknown) => void] => {
   const [state, setState] = useState<boolean>(initialState);
 
-  const toggle = (value: unknown): void => {
-    setState((prevState) => (typeof value == "boolean" ? value : !prevState));
+  const toggle = (value?: any): void => {
+    setState((prevState) =>
+      value && typeof value == "boolean" ? value : !prevState
+    );
   };
 
   return [state, toggle];

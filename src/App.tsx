@@ -12,6 +12,7 @@ import { shrtlnkUrl } from "./services/url.services";
 import { IResponse } from "./types/axios";
 import copy from "clipboard-copy";
 import useToggle from "./hooks/useToggle";
+import { useEffect, useState } from "react";
 function App() {
   // state to keep user data from local storage
   const { value, setStoredValue } = useLocalStorage<IResponse[]>(
@@ -25,16 +26,33 @@ function App() {
     loading,
   } = useAsyncFn(shrtlnkUrl);
   const [CopyValue, toggle] = useToggle(false);
+  const [currentCopiedValue, setCurrentCopiedValue] =
+    useState<IResponse | null>(null);
 
-  const handleCopyClick = async (text: string) => {
+  const handleCopyClick = async (item: IResponse) => {
     try {
-      await copy(text);
+      await copy(item.shrtlnk);
       toggle(true);
+      setCurrentCopiedValue(item);
     } catch (err) {
       console.error("Erreur lors de la copie dans le presse-papiers :", err);
       toggle(false);
     }
   };
+  // to chage the text after the user have copied the link
+  useEffect(
+    function () {
+      if (!CopyValue) return;
+
+      const time = setTimeout(function () {
+        toggle(!CopyValue);
+        setCurrentCopiedValue(null);
+      }, 10000);
+
+      return () => clearTimeout(time);
+    },
+    [CopyValue, toggle]
+  );
   return (
     <>
       <Headers />
@@ -49,12 +67,13 @@ function App() {
       {/* links */}
       <div className="max_width">
         {value && value.length >= 1 && (
-          <div className="mt-18 flex flex-col gap-4 w-full">
+          <div className="mt-24 flex flex-col gap-4 w-full">
             {value.map(function (item) {
+              const isCopied = item.key == currentCopiedValue?.key;
               return (
                 <div
                   key={item.key}
-                  className="rounded-lg  bg-card text-card-foreground shadow-sm   flex flex-col mx-4 md:mx-0 md:flex-row items-center !md:justify-between gap-4 "
+                  className="rounded-lg  bg-card text-card-foreground shadow-sm   flex flex-col mx-4 md:mx-0 md:flex-row items-center !md:justify-between md:gap-4 gap-1"
                 >
                   <div className="truncated-text px-4 py-2 border-gray border-b-[.1rem]  w-full pt-4 font-bold md:border-none">
                     {item.url}
@@ -65,10 +84,10 @@ function App() {
                   </div>
                   <div className="p-2 w-full md:w-auto">
                     <Button
-                      onClick={() => handleCopyClick(item.shrtlnk)}
+                      onClick={() => handleCopyClick(item)}
                       className="w-full bg-primary-cyan md:w-auto"
                     >
-                      {CopyValue ? "Copy !" : "Copied !"}
+                      {!isCopied ? "Copy !" : "Copied !"}
                     </Button>
                   </div>
                 </div>

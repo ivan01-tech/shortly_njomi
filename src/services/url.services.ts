@@ -11,10 +11,10 @@ export async function shrtlnkUrl(data: Url) {
   })
     .then((res) => {
       if ("message" in res) {
-        return Promise.reject({ message: res.message });
+        return Promise.reject(res);
       }
 
       return res;
     })
-    .catch((err) => err);
+    .catch((err) => Promise.reject({ message: err.message }));
 }
