@@ -1,5 +1,4 @@
 import instance from "@/config/Axios";
-import { IError } from "@/types/axios";
 import { AxiosError, AxiosRequestConfig, AxiosResponse } from "axios";
 
 /**
@@ -11,9 +10,9 @@ async function makeRequest<T>(
 ): Promise<T> {
   return instance(url, options)
     .then((res: AxiosResponse<T>) => {
-      if (res.status === 400 || res.status === 500) {
+      if ("message" in res) {
         console.log("status: " + res.status);
-        throw new Error((res.data as IError).message);
+        return Promise.reject(res);
       }
       const data = res.data;
       // TODO à supprimer

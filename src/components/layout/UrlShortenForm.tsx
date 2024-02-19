@@ -1,4 +1,3 @@
-"use client";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { useForm, SubmitHandler } from "react-hook-form";
@@ -7,6 +6,7 @@ import { Url, UrlModel, UrlType } from "@/lib/userModel";
 import { Input } from "../ui/input";
 import { ButtonLoading } from "../ui/LoadingBtn";
 import { IResponse, ShrtlnkResponse } from "@/types/axios";
+import toast from "react-hot-toast";
 
 type UrlProps = {
   setStoredValue: (
@@ -31,6 +31,7 @@ export default function UrlShortenForm({
     register,
     handleSubmit,
     // trigger,
+    reset,
     formState: { errors },
   } = useForm<UrlType>({
     resolver: zodResolver(UrlModel),
@@ -43,12 +44,16 @@ export default function UrlShortenForm({
 
       if ("message" in dataUrlValue) {
         console.error("Error:", dataUrlValue.message);
+        toast.error(dataUrlValue.message);
       } else {
         console.log("Short Link:", dataUrlValue, value);
         setStoredValue((prev) => [...prev, dataUrlValue]);
       }
     } catch (error) {
       console.log("error: ", error);
+      toast.error("Something went wrong !");
+    } finally {
+      reset({ url: "" });
     }
   };
 

@@ -88,13 +88,13 @@ function App() {
           </section>
         </div>
         <div className="">
-          <div className="my-20 flex flex-col gap-24 items-center relative after:absolute  after:border-4 after:block after:h-full md:after:w-full md:after:h-0 after:border-primary-cyan md:flex-row  md:gap-5 md:justify-between ">
+          <div className="my-20 flex flex-col gap-24 items-center relative after:absolute  after:border-4 after:block after:h-full sm:after:w-full sm:after:h-0 after:border-primary-cyan sm:flex-row  sm:gap-5 sm:justify-between ">
             {/* card */}
-            <div className="bg-white rounded-[10px] p-4 relative z-50 w-full max-w-[350px] md:max-w-[300px]">
+            <div className="bg-white rounded-[10px] p-4 relative z-50 w-full max-w-[350px] sm:max-w-[300px]">
               <div
                 className="absolute w-[80px] h-[80px] -top-[32%] translate-y-[50%] 
               left-[50%] translate-x-[-50%]
-              rounded-full   bg-primary-dark-violet flex justify-center items-center md:left-16"
+              rounded-full   bg-primary-dark-violet flex justify-center items-center sm:left-16"
               >
                 <img src="/images/icon-brand-recognition.svg" alt="" />
               </div>
@@ -108,11 +108,11 @@ function App() {
               </section>
             </div>
             {/* card */}
-            <div className="bg-white rounded-[10px] p-4 relative z-50 w-full max-w-[350px] md:max-w-[300px] mt-16">
+            <div className="bg-white rounded-[10px] p-4 relative z-50 w-full max-w-[350px] sm:max-w-[300px] mt-16">
               <div
                 className="absolute w-[80px] h-[80px] -top-[32%] translate-y-[50%] 
               left-[50%] translate-x-[-50%]
-              rounded-full   bg-primary-dark-violet flex justify-center items-center md:left-16"
+              rounded-full   bg-primary-dark-violet flex justify-center items-center sm:left-16"
               >
                 <img src="/images/icon-detailed-records.svg" alt="" />
               </div>
@@ -126,11 +126,11 @@ function App() {
               </section>
             </div>{" "}
             {/* card */}
-            <div className="bg-white rounded-[10px] p-4 relative z-50 w-full max-w-[350px] md:max-w-[300px] mt-28">
+            <div className="bg-white rounded-[10px] p-4 relative z-50 w-full max-w-[350px] sm:max-w-[300px] mt-28">
               <div
                 className="absolute w-[80px] h-[80px] -top-[32%] translate-y-[50%] 
               left-[50%] translate-x-[-50%]
-              rounded-full   bg-primary-dark-violet flex justify-center items-center md:left-16"
+              rounded-full   bg-primary-dark-violet flex justify-center items-center sm:left-16"
               >
                 <img src="/images/icon-fully-customizable.svg" alt="" />
               </div>
