@@ -25,5 +25,6 @@ This file logs all the changes made to the project.
 - `Stack` : Deploy in order to have more info about the Netxork error problem.
 
 - `Feat` : configuring test with vitest.
-
 - `Feat` : Finally solved netwok error.
+
+- `Feat` : Adding test for Banner , Advanced Statistcic , UrlShorthenForm and footer.

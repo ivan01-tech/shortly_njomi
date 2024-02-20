@@ -7,4 +7,4 @@ export interface IResponse {
 export interface IError {
   message: string;
 }
-export type ShrtlnkResponse = IError | IResponse;
+export type ShrtlnkResponse = IError | IResponse | null;

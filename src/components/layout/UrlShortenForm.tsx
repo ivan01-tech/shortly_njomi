@@ -26,7 +26,7 @@ export default function UrlShortenForm({
   setStoredValue,
 }: UrlProps) {
   // zod and RFC
-  const { loading, executeFn, value } = responObjUrl;
+  const { loading, executeFn, value, error } = responObjUrl;
   const {
     register,
     handleSubmit,
@@ -41,6 +41,8 @@ export default function UrlShortenForm({
     console.log("first form submission : ", data);
     try {
       const dataUrlValue = await executeFn(data);
+
+      if (dataUrlValue == null) return;
 
       if ("message" in dataUrlValue) {
         console.error("Error:", dataUrlValue.message);
@@ -100,6 +102,12 @@ export default function UrlShortenForm({
             </form>
             {errors.url && (
               <p className="text-secondary-red">{errors.url.message}</p>
+            )}
+
+            {error && (
+              <p data-testid="errorMsg" className="text-secondary-red">
+                {error}
+              </p>
             )}
           </div>
         </Card>

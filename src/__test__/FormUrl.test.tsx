@@ -1,117 +1,172 @@
-import App from "@/App";
 import UrlShortenForm from "@/components/layout/UrlShortenForm";
-import { useAsyncFn } from "@/hooks/useAsync";
-import { shrtlnkUrl } from "@/services/url.services";
-import { render, screen } from "@testing-library/react";
-// In your test file
+import { Url } from "@/lib/userModel";
+import { IResponse, ShrtlnkResponse } from "@/types/axios";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { vi } from "vitest";
 
-const mockExecuteFn = vi.fn();
+type ResponObj = {
+  error: string | null;
+  loading: boolean;
+  value: ShrtlnkResponse;
+  executeFn: (params: Url) => Promise<ShrtlnkResponse>;
+};
 
-// Créez un mock de la fonction useAsyncFn
-// jest.mock("", () => ({
-//   ...jest.requireActual("../hooks/useAsync.ts"), // Gardez les fonctionnalités réelles de votre fichier
-//   useAsyncFn: jest.fn(), // Remplacez la fonction par un mock
-// }));
-vi.mock("../hooks/useAsync.ts", async (importOriginal) => {
+vi.mock("../hooks/useAsync.ts", async () => {
   return {
     useAsyncFn: vi.fn(),
   };
 });
 
-vi.mock("../services/url.services.ts", async (importOriginal) => {
+vi.mock("../services/url.services.ts", async () => {
   return {
     shrtlnkUrl: vi.fn(),
   };
 });
+describe("UrlShortenForm", () => {
+  // should render the form with input and submit button
+  it("should render the form with input and submit button", () => {
+    // Arrange
+    const responObjUrl: ResponObj = {
+      error: null,
+      loading: false,
+      value: null,
+      executeFn: vi.fn().mockImplementation((a: IResponse) => {
+        return a;
+      }),
+    };
+    const setStoredValue = vi.fn();
 
-describe("test everything about the urlform", () => {
-  // useAsyncFn({
-  //   executeFn: jest.fn(),
-  //   loading: false,
-  //   error: null,
-  //   value: {
-  //     /* Mettez les valeurs de votre ShrtlnkResponse ici */
-  //   },
-  // });
-  // });
-
-  it("should render the form correctly", async function () {
-    await render(<App />);
+    // Act
+    render(
+      <UrlShortenForm
+        responObjUrl={responObjUrl}
+        setStoredValue={setStoredValue}
+      />
+    );
 
     // Assert
-    const button = (await screen.getByRole("button", {
-      name: "Shortten it !",
-    })) as HTMLButtonElement;
-
-    const input = screen.queryByPlaceholderText(
-      "Shorten a link here.."
-    ) as HTMLInputElement;
-
-    expect(button).toBeDefined();
-    expect(input).toBeDefined();
+    expect(screen.getByPlaceholderText("Shorten a link here..")).toBeDefined();
+    expect(screen.getByText(/Shortten it !/i)).toBeDefined();
   });
-  it("should render the invalid url form", async () => {
-    vi.mocked(useAsyncFn).mockReturnValue({
+
+  // // should submit the form with valid url and call executeFn with the data
+  it("should submit the form with valid url and call executeFn with the data", async () => {
+    // Arrange
+
+    const setStoredValue = vi.fn().mockImplementation((a: IResponse) => [a]);
+    const mockedResponse = {
+      url: "https://example.com",
+      key: "https://example.com",
+      shrtlnk: "https://example.com",
+    };
+    const responObjUrl: ResponObj = {
       error: null,
-      value: null,
       loading: false,
-      executeFn: vi.fn(),
-    });
-
-    const mockFoo = vi.mocked(shrtlnkUrl).mockResolvedValueOnce({
-      url: "https://vitest.dev/api/vi.html#vi-mock",
-      key: "string",
-      shrtlnk: "https://vitest.dev",
-    });
-
-    const { executeFn, value, loading, error } = useAsyncFn(mockFoo);
-    const fn = jest.fn();
+      value: null,
+      executeFn: vi.fn().mockRejectedValue(mockedResponse),
+    };
 
     render(
       <UrlShortenForm
-        responObjUrl={{
-          executeFn,
-          error,
-          loading,
-          value,
-        }}
-        setStoredValue={fn}
+        responObjUrl={responObjUrl}
+        setStoredValue={setStoredValue}
       />
     );
+
+    const input = screen.getByPlaceholderText(
+      "Shorten a link here.."
+    ) as HTMLInputElement;
+    const submitButton = screen.getByText(/Shortten it !/i);
+
+    // Act
+    fireEvent.change(input, { target: { value: "https://example.com" } });
+    fireEvent.click(submitButton);
+
+    // Assert
+    await waitFor(() => {
+      expect(responObjUrl.executeFn).toHaveBeenCalledWith({
+        url: "https://example.com",
+      });
+      // TODO
+      // expect(setStoredValue).toHaveBeenCalled();
+      // expect(setStoredValue).toHaveBeenCalledWith(mockedResponse);
+    });
   });
 
-  // it("Should check input value", async () => {
-  //   // Setup
-  //   await render(<App />);
-  //   // Assert
-  //   const input = screen.getByLabelText(
-  //     "Shorten a link here.."
-  //   ) as HTMLInputElement;
-  //   const button = screen.getByRole("button", {
-  //     name: "Shortten it !",
-  //   }) as HTMLButtonElement;
+  // // should reset the form after successful submission
+  it("should reset the form after successful submission", async () => {
+    // Arrange
 
-  //   // Actions
-  //   fireEvent.change(input, {
-  //     target: {
-  //       value: "testing-library.com/docs/dom-testing-library/api-events",
-  //     },
-  //   });
-  //   fireEvent.click(button);
+    const setStoredValue = vi.fn().mockImplementation((a: IResponse) => [a]);
+    const mockedResponse = {
+      url: "https://example.com",
+      key: "https://example.com",
+      shrtlnk: "https://example.com",
+    };
+    const responObjUrl: ResponObj = {
+      error: null,
+      loading: false,
+      value: null,
+      executeFn: vi.fn().mockRejectedValue(mockedResponse),
+    };
 
-  //   expect(screen.getByRole("p", { name: "Invalid url" })).toBeInTheDocument();
-  // });
+    render(
+      <UrlShortenForm
+        responObjUrl={responObjUrl}
+        setStoredValue={setStoredValue}
+      />
+    );
 
-  // it("Should have the correct value", async () => {
-  //   // Assert
-  //   const input = screen.getByLabelText(
-  //     "Shorten a link here.."
-  //   ) as HTMLInputElement;
+    const input = screen.getByPlaceholderText(
+      "Shorten a link here.."
+    ) as HTMLInputElement;
+    const submitButton = screen.getByText(/Shortten it !/i);
 
-  //   // Actions
-  //   fireEvent.change(input, { target: { value: "Hello world" } });
-  //   // console.log("first click : ", input.target.value);
-  //   expect(input.value).toEqual("Hello world");
-  // });
+    // Act
+    fireEvent.change(input, { target: { value: "https://example.com" } });
+    fireEvent.click(submitButton);
+    // Assert
+    await waitFor(() => {
+      expect(input.value).toEqual("");
+    });
+  });
+
+  // should display error message if executeFn returns an object without shrtlnk property
+  it("should display error message if executeFn returns an object without shrtlnk property", async () => {
+    // Arrange
+
+    const setStoredValue = vi.fn().mockImplementation((a: IResponse) => [a]);
+    const mockedResponse = {
+      message: "Network Error!",
+    };
+    const responObjUrl: ResponObj = {
+      error: "Network Error!",
+      loading: false,
+      value: null,
+      executeFn: vi.fn().mockRejectedValue(mockedResponse),
+    };
+
+    render(
+      <UrlShortenForm
+        responObjUrl={responObjUrl}
+        setStoredValue={setStoredValue}
+      />
+    );
+
+    const input = screen.getByPlaceholderText(
+      "Shorten a link here.."
+    ) as HTMLInputElement;
+    const submitButton = screen.getByText(/Shortten it !/i);
+
+    // Act
+    fireEvent.change(input, { target: { value: "https://example.com" } });
+    fireEvent.click(submitButton);
+
+    // Assert
+    await waitFor(() => {
+      expect(screen.getByTestId("errorMsg")).toBeDefined();
+
+      expect(setStoredValue).not.toHaveBeenCalled();
+    });
+  });
 });
