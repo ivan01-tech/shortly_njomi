@@ -9,7 +9,7 @@ function Footer() {
       <div className=" flex flex-col items-center justify-center   md:items-start text-white gap-8 md:flex-row max_width md:justify-start flex-wrap">
         <div className="mb-8 mt-4 logo_footer md:flex-1">
           <a className="" href="/">
-            <img src="/public/images/logo.svg" alt="shortly logo" />
+            <img src="/images/logo.svg" alt="shortly logo" />
           </a>
         </div>
         <div className="flex flex-col mdp:flex-row mdp:w-full mdp:justify-around md:w-auto gap-3 flex-wrap">
