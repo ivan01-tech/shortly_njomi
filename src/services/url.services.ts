@@ -10,6 +10,7 @@ export async function shrtlnkUrl(data: Url) {
     method: "POST",
   })
     .then((res) => {
+      if (res == null) return Promise.reject({ message: "Object is null" });
       if ("message" in res) {
         return Promise.reject(res);
       }

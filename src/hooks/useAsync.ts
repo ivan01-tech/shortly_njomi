@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { IError, ShrtlnkResponse } from "@/types/axios";
+import { IError } from "@/types/axios";
 import { useCallback, useState } from "react";
 
 // type of the state
@@ -60,10 +60,16 @@ export function useAsyncInternal<U, V>(
       setLoading(true);
       return func(params)
         .then((res) => {
-          if ("message" in (res as ShrtlnkResponse)) {
+          if (res == null) {
             setValue(null);
-            setError((res as IError).message);
-            return Promise.reject({ message: (res as IError).message });
+            setError("object is null");
+            return Promise.reject({ message: "object is null" });
+          } else if ("message" in (res as unknown as IError)) {
+            setValue(null);
+            setError((res as unknown as IError).message);
+            return Promise.reject({
+              message: (res as unknown as IError).message,
+            });
           } else {
             setValue(res);
             setError(null);
