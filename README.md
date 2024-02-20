@@ -18,13 +18,14 @@ This file logs all the changes made to the project.
 
 ## Code Logic
 
-- `Add`: configuring state for the , hooks loacl storage services to make request and so on`
+- `Add`: configuring state for the app :  hooks loacal storage, services to make request and so on`
 
 - `Stack` : try to solve CORS problems.
 
 - `Stack` : Deploy in order to have more info about the Netxork error problem.
 
 - `Feat` : configuring test with vitest.
+- 
 - `Feat` : Finally solved netwok error.
 
-- `Feat` : Adding test for Banner , Advanced Statistcic , UrlShorthenForm and footer.
+- `Feat` : Adding test for Banner , Advanced Statistcic , UrlShorthenForm and footer section.
